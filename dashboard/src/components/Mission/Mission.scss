@@ -1,0 +1,77 @@
+
+@use './../../style';
+
+.Mission {
+  cursor: pointer;
+}
+
+.Mission-circle {
+  position: absolute;
+  pointer-events: all;
+  width: var(--delta);
+  height: var(--delta);
+  border-radius: calc(var(--delta) / 2);
+}
+
+
+.Mission-incomplete {
+  background: none;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: solid var(--link-width) var(--icon);
+}
+.Mission-incomplete-selected {
+  border: solid var(--link-width) var(--blue);
+}
+.Mission-incomplete-hasFailures {
+  border: solid var(--link-width) var(--failed);
+}
+
+.Mission-complete {
+  background: var(--icon);
+}
+.Mission-complete-selected {
+  background: var(--blue);
+}
+.Mission-complete-hasFailures {
+  background: var(--failed);
+}
+
+.Mission-loading {
+  border: solid var(--link-width) transparent;
+  border-top-color: var(--icon);
+  border-bottom-color: var(--icon);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  -webkit-animation: spinning 1s linear infinite;
+  animation: spinning 1s linear infinite;
+}
+.Mission-loading-selected {
+  border-top-color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+.Mission-complete-hasFailures {
+  border-top-color: var(--failed);
+  border-bottom-color: var(--failed);
+}
+
+
+// animations
+
+@include style.keyframes(spinning) {
+  0%{
+    @include style.transform(rotate(0deg));
+  }
+
+  50%{
+    @include style.transform(rotate(360deg));
+  }
+
+  100% {
+    @include style.transform(rotate(720deg));
+  }
+}
+

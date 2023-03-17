@@ -1,0 +1,44 @@
+
+@use './../../style';
+
+.GUIApp {
+  background: var(--background);
+  position: relative;
+  margin: 0;  // allow space so that the header's drop shadow appears
+  height: 100vh;
+  width: 100vw;
+
+  p, h1, h2, h3, input, span, div {
+    font-family: var(--mono-font);
+    color: var(--text-colour);
+    line-height: 1;
+  }
+
+  pre, p {
+    font-size: var(--font-size-m);
+    margin: 5px 0 5px 0;
+    line-height: 1;
+  }
+
+  h1, h2, h3 {
+    font-weight: bold;
+    font-size: var(--font-size-l);
+  }
+
+  a, a:visited {
+    color: var(--blue);
+  }
+}
+
+.GUIApp-darkModeSwitch {
+  position: absolute;
+  top: 20px;
+  right: 70px;
+}
+
+.GUIApp-helpButton {
+  cursor: pointer;
+  position: absolute;
+  top: 27px;  // to make it line up with the dark mode switch I need to hard code a value
+  right: 30px;
+}

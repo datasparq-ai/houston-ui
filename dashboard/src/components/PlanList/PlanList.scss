@@ -1,0 +1,47 @@
+
+.PlanList {
+  pointer-events: none;
+  position: relative;
+  width: var(--plan-width);
+  padding-bottom: 300px;  /* used to center the list as the element itself is not the same size as the list */
+}
+
+.PlanList-summary {
+
+}
+
+h2.PlanList-title {
+  margin: 1em 0 1em 0;
+  font-family: var(--logo-font);
+  font-weight: normal;
+  font-size: var(--font-size-xl);
+}
+
+.show-text {
+  transition: opacity 400ms;
+  opacity: 1;
+}
+
+.hide-text {
+  transition: opacity 100ms;
+  opacity: 0;
+}
+
+.PlanList-noPlansMessage {
+  pointer-events: all;
+}
+
+.PlanList-upArrow {
+  position: absolute;
+  cursor: pointer;
+  pointer-events: all;
+  top: var(--delta);
+  left: var(--delta);
+}
+
+.PlanList-downArrow {
+  position: absolute;
+  cursor: pointer;
+  pointer-events: all;
+  left: var(--delta);
+}

@@ -1,0 +1,17 @@
+
+.MissionInfo {
+  padding: 0 var(--delta) 0 var(--delta);
+  border-left: solid var(--link-width) var(--link);
+
+  :first-child {
+    margin: 0 !important;
+  }
+
+  p {
+    margin: 5px 0 5px 0;
+  }
+}
+
+.MissionInfo-notFound {
+  color: var(--failed)
+}

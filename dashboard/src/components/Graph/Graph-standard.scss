@@ -1,0 +1,102 @@
+
+@use "./../../style";
+
+.Graph {
+
+}
+.Graph-link {
+  fill: none;
+  stroke-width: var(--incomplete-link-width);
+  stroke-linecap: round;
+}
+.Graph-link-path {
+  stroke: var(--link);
+  stroke-opacity: 0.75;
+}
+.Graph-link-path-highlight {
+  stroke: var(--linkHighlight);
+  stroke-opacity: 0.75;
+}
+
+.Graph-node {
+  cursor: pointer;
+}
+
+.Graph-node-rect {
+  fill: var(--ready);
+  rx: 10px;
+}
+
+.state-started-color {
+  color: var(--started) !important;
+}
+// exception - not visible unless white
+.state-ready-color {
+  color: var(--tooltip-text-colour) !important;
+}
+.state-started-color {
+  color: var(--started) !important;
+}
+.state-finished-color {
+  color: var(--finished) !important;
+}
+.link-state-finished {
+  stroke-width: var(--link-width);
+}
+.state-failed-color {
+  color: var(--failed) !important;
+}
+.state-upstreamFailed-color {
+  color: var(--upstreamFailed) !important;
+}
+.state-excluded-color {
+  color: var(--link) !important;
+}
+
+
+
+.state-ready {
+  fill: var(--ready);
+}
+.state-started {
+  fill: var(--started);
+}
+.state-finished {
+  fill: var(--finished);
+}
+.state-failed {
+  fill: var(--failed);
+}
+.state-upstreamFailed {
+  fill: var(--upstreamFailed);
+}
+.state-excluded {
+  fill: url("#stripeFilled");
+}
+.state-excluded:hover {
+  fill: var(--ready);
+}
+.state-skipped {
+  fill: var(--skipped);
+}
+
+.link-state-excluded {
+  stroke: url("#stripe");
+}
+
+.Graph-node-text {
+  pointer-events: none;
+  fill: var(--text-colour);
+  font-family: var(--mono-font);
+  font-size: var(--font-size-m);
+}
+
+// patterns (html is in View component)
+
+pattern#stripe line, pattern#stripeFilled line {
+  stroke: var(--link);
+}
+
+pattern#stripeFilled rect {
+  fill: var(--background);
+}

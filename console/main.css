@@ -1,0 +1,29 @@
+:root {
+  --red: #c5674b;
+  --blue: rgb(58, 145, 172);
+  --purple: #a38eb7;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body, input, select, button {
+    font-family: monospace;
+    /* light mode */
+    background-color: white;
+    color: #181a1e;
+}
+
+input, button, select {
+    border: solid 1px #aaa4;
+    border-radius: 3px;
+}
+
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+    body, input, select, button {
+        background-color: #181a1e;
+        color: white;
+    }
+}

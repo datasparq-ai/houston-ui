@@ -1,0 +1,88 @@
+
+.Help {
+
+  background: var(--background);
+
+  pointer-events: all;
+  position: absolute;
+  height: calc(100% - 30vh);
+  width: calc(100% - 30vw);
+  top: 0;
+  left: 0;
+  padding: 15vh 15vw 15vh 15vw;
+
+  p {
+    margin: var(--delta) 0;;
+    line-height: normal;
+  }
+
+  p:first-child, h3:first-child {
+    margin-top: 0;
+  }
+
+  a {
+    pointer-events: all;
+  }
+
+  h3 {
+    margin: var(--delta) 0;
+  }
+
+}
+
+.Help-closeButton {
+  cursor: pointer;
+  pointer-events: all;
+  position: absolute;
+  top: 15vh;
+  left: calc(15vw - 50px);
+}
+
+svg.Help-colourKey {
+  height: var(--delta);
+  width: 100%;
+
+  rect {
+    height: 10px;
+    width: 10px;
+  }
+  text {
+    fill: var(--text-colour);
+  }
+}
+
+.Help-colourLegend, .Help-missionLegend {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0;
+
+  .legendItem {
+    display: flex;
+    flex-direction: row;
+    margin: calc(var(--delta)/2) calc(var(--delta) + 10px) calc(var(--delta)/2) 0;
+
+    p {
+      margin: 0;
+    }
+
+    svg {
+      margin-top: 3px;
+      margin-right: 5px;
+      height: 10px;
+      width: 10px;
+
+      rect {
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+
+  .Help-missionLegend-p {
+    padding-left: calc(var(--delta) * 1.5);
+    padding-top: 2px;
+  }
+}

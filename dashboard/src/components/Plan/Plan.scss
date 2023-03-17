@@ -1,0 +1,66 @@
+
+@use './../../style';
+
+.Plan {
+  width: 100%;
+  max-width: var(--plan-width);
+  padding: 0 var(--delta) 0 var(--delta);
+  transition: 300ms;
+  border-left: solid var(--link-width) var(--light-grey);
+
+  p, h3 {
+    margin-top: 0;
+    pointer-events: all;
+    white-space: nowrap;  // wrapping would change the height of the plan, which is fixed
+  }
+
+  h3 {
+    font-weight: normal;
+    font-size: var(--font-size-l);
+    margin: 0 0 5px 0;
+  }
+}
+
+.Plan-nameContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.Plan-nameContainer > div {
+  z-index: 999;
+  pointer-events: all;
+}
+
+.Plan-nonSelectedPlan:hover {
+  border-left: solid var(--link-width) var(--blue);
+  cursor: pointer;
+}
+
+.Plan-summary {
+}
+.Plan-timeline {
+}
+
+
+
+.Plan-missionList {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.Plan-closeButton {
+  position: absolute;
+  top: 0;
+  left: calc(-2 * var(--delta));
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.Plan-hidden {
+
+  p, h3, div {
+    pointer-events: none;
+    cursor: default;
+  }
+}

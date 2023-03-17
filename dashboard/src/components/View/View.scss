@@ -1,0 +1,30 @@
+
+.View {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow-y: hidden;  // this allows plans to disappear off the bottom of the view
+
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.View-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--view-height);
+  width: var(--view-width);
+}
+
+
+.View-backButton {
+
+  position: absolute;
+  top: 27px;
+  left: 30px;
+  cursor: pointer;
+}

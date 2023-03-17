@@ -1,0 +1,44 @@
+
+.ControlPanel {
+  display: flex;
+  flex-direction: column;
+
+  height: var(--graph-height);
+  align-items: center;
+  justify-content: center;
+
+  top: var(--view-margin-top);
+  left: calc(85vw + var(--delta));
+  position: absolute;
+
+  width: max-content;
+
+  hr {
+   border-top: 1px solid var(--link);
+   margin: 5px 0 5px 0;
+  }
+
+  i {
+    margin-right: 10px;
+    color: var(--link);
+    border-radius: 3px;
+  }
+
+  i.selected {
+    color: var(--background);
+    background: var(--icon);
+  }
+}
+
+.ControlPanel-inner {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.ControlPanel-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}

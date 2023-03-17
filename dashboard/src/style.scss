@@ -1,0 +1,140 @@
+
+/**
+ * Global styles for the app
+ */
+
+//
+// imports
+//
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+//
+// scss variables
+//
+
+// these are put here without units so that they can be easily exported and used by js
+
+$delta: 20;  // px - the standard small distance throughout the app
+
+$planHeight: 60;  // px
+$planWidth: 700 - 2 * $delta; // px
+
+$viewWidthPercent: 1.0; // % of window.innerWidth
+$viewHeightPercent: 1.0; // % of window.innerHeight
+
+$graphWidthPercent: 0.6 * $viewWidthPercent; // % of window.innerWidth
+// note: graphHeight must be calculated from other variables: graphHeight = $viewHeightPercent * window.innerHeight - 30vh - $delta - $planHeight
+
+body {
+
+  //
+  // css variables
+  //
+
+  --app-height: 100vh;
+  --view-margin-top: 15vh;
+
+  --view-width: calc(#{$viewWidthPercent} * 100vw);
+  --view-height: calc(#{$viewHeightPercent} * 100vh);
+
+  --plan-width: calc(#{$planWidth} * 1px);
+  --plan-height: calc(#{$planHeight} * 1px);
+
+  // graph takes the height of the space left over after the plan and top/bottom padding
+  --graph-height: calc(100vh - 10vh - #{$planHeight} * 1px - #{$delta} * 1px - var(--view-margin-top));
+
+  --delta: calc(#{$delta} * 1px);
+  --link-width: 2px;
+  --incomplete-link-width: 1px;
+
+  // colours
+  //--black: #363636;
+  --black: #171717;
+  --grey: #555;
+  --light-grey: #919191;
+  --blue: #468fee;
+  --green: #48c257;
+  --red: #d55454;
+
+  --code-orange: #7c5744;
+  --code-green: #48594b;
+
+  //
+  // theme
+  //
+
+  --background: white;  // only used in App component
+
+  --text-colour: var(--black);
+  --tooltip-text-colour: white;
+  --logo-font: 'Major Mono Display', monospace;
+  --font: 'Open Sans', sans-serif;
+  //--font: monospace;
+  --mono-font: monospace;
+
+  --font-size-m: 13px;
+  --font-size-l: 17.55px;
+  --font-size-xl: 22px;
+
+  --icon: var(--black);
+  --link: var(--light-grey);
+  --linkHighlight: var(--grey);
+  // plan states
+  --ready: var(--black);
+  --started: var(--blue);
+  --finished: var(--green);
+  --failed: var(--red);
+  --skipped: var(--light-grey);
+  --upstreamFailed: orange;
+
+}
+
+body[data-theme="dark"] {
+
+  --background: var(--black);
+  --text-colour: white;
+  --tooltip-text-colour: var(--black);
+
+  --icon: white;
+  --link: var(--light-grey);
+  --linkHighlight: #eee;
+  // plan states
+  --ready: var(--text-colour);
+  --notStarted: white;
+  --started: var(--blue);
+  --finished: var(--green);
+  --failed: var(--red);
+  --skipped: var(--light-grey);
+  --upstreamFailed: orange;
+
+}
+
+//
+// mixins
+//
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}

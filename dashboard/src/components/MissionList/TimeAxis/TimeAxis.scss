@@ -1,0 +1,15 @@
+
+.TimeAxis {
+  position: absolute;
+  height: 30px;
+  width: calc(100% + 4px);  // extend the container a little to allow the whole axis to be visible
+
+  path, line {
+    stroke: var(--icon);
+  }
+
+  text {
+    font-family: var(--mono-font);
+    fill: var(--icon);
+  }
+}

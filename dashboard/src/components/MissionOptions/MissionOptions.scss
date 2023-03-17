@@ -1,0 +1,62 @@
+
+li.MuiButtonBase-root {
+  display: flex !important;
+  text-align: left;
+}
+
+.MissionOptions {
+  padding: 0;
+
+  button {
+    padding: 0;
+  }
+
+  path {
+    fill: var(--link);
+  }
+}
+
+.MuiMenu-list {
+  li {
+    font-size: var(--font-size-m);
+  }
+}
+
+.MuiDialog-paper {
+  h2 {
+    //font-family: var(--font);
+  }
+  p {
+    font-size: var(--font-size-m);
+    color: var(--black);
+  }
+  pre {
+    padding: 10px;
+    margin: 10px 0 5px 0;
+    border-left: 0.5px solid var(--light-grey);
+    font-size: var(--font-size-m);
+    font-family: var(--mono-font);
+    span.spoiler {
+      color: var(--code-green);
+      background-color: var(--code-green);
+    }
+    span.string {
+      color: var(--code-green);
+    }
+    span.program {
+      color: var(--code-orange);
+    }
+  }
+  div {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  button {
+    padding: 5px;
+  }
+}
+
+div.MuiDialogActions-root {
+  padding-right: 24px;
+  padding-bottom: 5px;
+}
