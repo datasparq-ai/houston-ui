@@ -2,8 +2,12 @@
 import dummyData, {newMission, dummyMissionUpdates} from '../components/App/dummyData'
 
 export function initWebSocket(key, demo) {
-  let conn = new WebSocket("ws://" + window.location.host + "/ws?a=" + key);
-  if (demo) {
+  let conn;
+  if (!demo) {
+    conn = new WebSocket("ws://" + window.location.host + "/ws?a=" + key);
+  }
+  else {
+    conn = {}  // create an object to represent the websocket connection
     setTimeout(() => {
       conn.onmessage({data: JSON.stringify({"content": "New client connected","event":"notice"})})
     }, 1000)
@@ -28,10 +32,12 @@ export function initWebSocket(key, demo) {
         conn.onmessage({data: JSON.stringify({"content": updatedMission, "event": "missionCreation"})})
 
       }, 2000 + i * 200)
+
+      return [stage, state]
     })
   }
 
-  conn.onclose = function (evt) {
+  conn.onclose = function (ev) {
     console.log("! WebSocket connection closed");
     setTimeout(() => {
       initWebSocket()
@@ -41,6 +47,7 @@ export function initWebSocket(key, demo) {
   conn.onopen = function (ev) {
     console.log("! WebSocket connection opened");
   }
+
   conn.onerror = (ev) => {
     console.log("! WebSocket error");
     console.log(ev)

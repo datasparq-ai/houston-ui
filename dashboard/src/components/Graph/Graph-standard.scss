@@ -25,6 +25,9 @@
 .Graph-node-rect {
   fill: var(--ready);
   rx: 10px;
+  stroke-width: 1;
+  stroke: var(--background);
+  paint-order: stroke;
 }
 
 .state-started-color {

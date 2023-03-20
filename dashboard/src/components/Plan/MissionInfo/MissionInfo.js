@@ -23,7 +23,6 @@ export default function MissionInfo(props) {
     if (props.data.loaded) {
 
       const startEnd = startEndTime(props.data)
-      console.log(startEnd)
 
       const complete = isComplete(props.data)
       const start = format(props.data.t)

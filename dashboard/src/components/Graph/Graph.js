@@ -244,12 +244,12 @@ export default class Graph extends React.Component {
    */
   initView = (duration=0, mode) => {
 
-    this.g.selectAll("*").interrupt();
+    // this.g.selectAll("*").interrupt();
     this.g.selectAll("*").interrupt("gantt");
-    this.node.interrupt();
+    // this.node.interrupt();
     this.node.selectAll("rect").interrupt();
     this.node.selectAll("rect").interrupt("gantt");
-    this.link.interrupt();
+    // this.link.interrupt();
 
     switch (mode) {
       case "pictogram":
@@ -483,6 +483,8 @@ export default class Graph extends React.Component {
       useYScale = false;
     }
 
+    console.log(useYScale)
+
     if (firstRender) {
       this.centre(duration, "gantt")
 
@@ -494,18 +496,12 @@ export default class Graph extends React.Component {
       this.node.selectAll("rect")
         .attr("width", d => d.s === 5 ? this.style.Ws : this.style.W)
 
-      // if (this.d3State.viewMode !== "gantt") {  // don't start at 0 if we're already looking at a gantt chart
-      // } else {
-      //   if we are already looking at a Gantt, ensure all stages start in the correct position at the correct length
-      // }
-
       this.node
         .transition("gantt").duration(duration)
         .attr("transform", (d, i) => {
           const w = d.s === 5 ? this.style.Ws : this.style.W
           d.y = useYScale ? this.yScalePictogram(i) : i * w * 2;
           if (dateParse(d.t) !== null) {
-            // d.x = this.xScale(0) + this.timeScale(dateParse(d.t));
             d.x = this.xScale(0) + this.timeScale(dateParse(d.t));
           } else {
             d.x = this.xScale(0) + this.timeScale(this.graph.domain.time[1]);
@@ -544,10 +540,10 @@ export default class Graph extends React.Component {
         .style("opacity", 0);
 
       this.node.selectAll("text")
-        .attr("transform", "")
+        .attr("transform", "rotate(0)")
         .attr("text-anchor", "end")
-        .attr("x", - this.style.W)
-        .attr("y", this.style.W/2);
+        .attr("x", - this.style.W/2)
+        .attr("y", this.style.W * 0.85);
 
       this.fadeLabels()
 
