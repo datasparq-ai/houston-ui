@@ -45,3 +45,12 @@ the url on load, and any changes to the state update the url and add a new histo
 inside the View's SVG container with D3. Similarly, it uses a reference to the Tooltip to change its values with D3. The 
 Graph component also prevents React from re-rendering it when props change, and handles changes in props manually.
 
+## Deployment
+
+To build the app, run:
+
+```bash
+yarn build
+```
+
+Static js and css are served from a public Google Cloud Storage Bucket called 'houston-static'.

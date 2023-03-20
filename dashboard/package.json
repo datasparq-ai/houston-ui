@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "export PUBLIC_URL=https://game-ii.s3.eu-west-2.amazonaws.com/dashboard && react-scripts build",
+    "build": "export PUBLIC_URL=https://storage.googleapis.com/houston-static/dashboard && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
