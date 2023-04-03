@@ -20,6 +20,7 @@ export function useLocalStorageKeys(demo) {
         data.active.id = "demo"
         data.active.name = "Houston Demo"
         data.list["Houston Demo"] = "demo"
+        data.list["New Key"] = "foobar"
       }
       return data
     } catch (error) {

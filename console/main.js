@@ -175,7 +175,14 @@ function render() {
   appendLog("· HOUSTON CONSOLE ·", false, "var(--blue)")
 
   function initWebSocket() {
-    let conn = new WebSocket("ws://" + location.host + "/ws?a=" + keys.active.id);
+    // browsers do not allow 'mixed content'. If TLS has been configured on the Houston server then we must use WSS.
+    let conn
+    if (window.location.protocol === "https:") {
+      conn = new WebSocket("wss://" + window.location.host + "/ws?a=" + keys.active.id);
+    }
+    else {
+      conn = new WebSocket("ws://" + window.location.host + "/ws?a=" + keys.active.id);
+    }
     console.log(conn)
     conn.onclose = function (evt) {
       appendLog("! WebSocket connection closed", false, "var(--red)");

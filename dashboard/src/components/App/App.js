@@ -279,11 +279,21 @@ export default function App() {
 
   }
 
+  const handleKeyChange = (newValue) => {
+    if (newValue.label === null) {
+      document.title = "Houston"
+    } else {
+      document.title = "Houston | " + newValue.label
+    }
+    setPlans({})
+  }
+
   /**
    * Init - Call lots of async API gets and state computations to get every plan and mission.
    */
   useEffect(() => {
 
+    // if the key has changed, delete all data
     listPlans().then(getMissions).then(getPlans).then(() => {
       console.log("finished initial load. plans:", plans)
     })
@@ -295,18 +305,26 @@ export default function App() {
 
     <div className="GUIApp">
 
-      { keys.active.id === null ?
+      { typeof(keys.active.id) === "undefined" || keys.active.id === null ?
         <div className={"View"} >
         <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
           <p style={{marginBottom: "10px"}}>Enter your API key</p>
-          <KeySelect keys={keys} setKeys={setKeys} demo={demo} position={"center"} />
+          <KeySelect keys={keys}
+                     setKeys={setKeys}
+                     demo={demo}
+                     position={"center"}
+                     handleKeyChange={handleKeyChange} />
         </div>
         </div> : (
           <>
           <View plans={plans}
                 deletePlan={deletePlan}
                 deleteMission={deleteMission} />
-          <KeySelect keys={keys} setKeys={setKeys} demo={demo} position={"corner"} />
+          <KeySelect keys={keys}
+                     setKeys={setKeys}
+                     demo={demo}
+                     position={"corner"}
+                     handleKeyChange={handleKeyChange} />
           </>
         )
       }

@@ -57,7 +57,14 @@ export function dateParse(stringDatetime) {
  */
 export function format(stringDatetime) {
   if (!stringDatetime || stringDatetime < "1971") return null;
-  return dateParse(stringDatetime).toISOString().replace("T", " ").slice(0, -5)
+
+  // if datetime is from within a day of the current time, return only the time
+  const date = dateParse(stringDatetime)
+  if (Math.abs((now() - date) / (1000 * 60 * 60 * 24)) < 1) {
+    return date.toLocaleTimeString()
+  } else {
+    return date.toLocaleString()
+  }
 }
 
 export function now() {

@@ -4,7 +4,12 @@ import dummyData, {newMission, dummyMissionUpdates} from '../components/App/dumm
 export function initWebSocket(key, demo) {
   let conn;
   if (!demo) {
-    conn = new WebSocket("ws://" + window.location.host + "/ws?a=" + key);
+    // browsers do not allow 'mixed content'. If TLS has been configured on the Houston server then we must use WSS.
+    if (window.location.protocol === "https:") {
+      conn = new WebSocket("wss://" + window.location.host + "/ws?a=" + key);
+    } else {
+      conn = new WebSocket("ws://" + window.location.host + "/ws?a=" + key);
+    }
   }
   else {
     conn = {}  // create an object to represent the websocket connection
