@@ -73,31 +73,20 @@ export default function KeySelect(props) {
 
   const onChange = (newValue, actionType) => {
     if (actionType.action === 'clear') {
-      console.log(actionType.removedValues)
-      console.log(actionType.removedValues)
       let newKey
       props.setKeys(state => {
         delete state.list[actionType.removedValues[0].label]
-        console.log(Object.keys(state.list) )
         if (Object.keys(state.list).length > 0) {
           newKey = {id: state.list[Object.keys(state.list)[0]], name: Object.keys(state.list)[0]}
-          // state.active.id = state.list[Object.keys(state.list)[0]].id
-          // state.active.name = state.list[Object.keys(state.list)[0]].name
         } else {
           newKey = {id: null, name: null}
         }
         state.active = newKey
-        console.log(state.active)
-        // else {
-        //   state.active.id = null
-        //   state.active.name = null
-        // }
         return { ...state }
       })
       props.handleKeyChange({ label: newKey.name })
     } else if (actionType.action === 'select-option') {
       if (newValue.value === props.keys.active.id) {
-        console.log("Same key selected")
         return
       }
       props.setKeys(state => {
