@@ -30,23 +30,6 @@ li.MuiButtonBase-root {
     font-size: var(--font-size-m);
     color: var(--black);
   }
-  pre {
-    padding: 10px;
-    margin: 10px 0 5px 0;
-    border-left: 0.5px solid var(--light-grey);
-    font-size: var(--font-size-m);
-    font-family: var(--mono-font);
-    span.spoiler {
-      color: var(--code-green);
-      background-color: var(--code-green);
-    }
-    span.string {
-      color: var(--code-green);
-    }
-    span.program {
-      color: var(--code-orange);
-    }
-  }
   div {
     padding-top: 0;
     padding-bottom: 0;
@@ -58,5 +41,5 @@ li.MuiButtonBase-root {
 
 div.MuiDialogActions-root {
   padding-right: 24px;
-  padding-bottom: 5px;
+  padding-bottom: 12px;
 }

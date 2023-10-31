@@ -36,6 +36,10 @@ async function get(path = "", key) {
     return res.text()
   }
 
+  if (path.indexOf("/logs") === 0) {
+    return res.text()
+  }
+
   return res.json()
 }
 
@@ -202,8 +206,6 @@ function render() {
 
     };
     conn.onopen = function (ev) {
-      // let message = {type: "notification", data: name.value + " has entered the chat"};
-      // conn.send(JSON.stringify(message));
       appendLog("! WebSocket connection opened", false, "var(--purple)");
       console.log(ev)
 
@@ -229,4 +231,4 @@ function render() {
     appendLog("! Your browser does not support WebSockets.", false, "var(--red)");
   }
 
-};
+}

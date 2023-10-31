@@ -4,7 +4,7 @@
 This repo contains the default front-end for [Houston](https://github.com/datasparq-ai/houston).
 
 There are multiple separate front-end apps:
-- Dashboard: [source](./dashboard), [demo](https://github.com/datasparq-ai/houston-ui/blob/main/dashboard/public/demo.html?demo)
+- Dashboard: [source](./dashboard), [demo](https://storage.googleapis.com/houston-static/dashboard/demo.html?demo)
 - Console: [source](./console)
 
 Houston is an open source, API based workflow orchestration tool.

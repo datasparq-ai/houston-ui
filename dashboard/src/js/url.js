@@ -66,6 +66,9 @@ export function stateToURL(mappings) {
   // get the current state to get the values of all other params
   let state = URLToState();
 
+  // never show the key in the URL
+  delete state.key
+
   mappings.forEach(d => {
     Object.assign(state, d)
   });

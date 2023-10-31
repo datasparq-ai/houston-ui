@@ -2,6 +2,7 @@ import CreatableSelect from "react-select/creatable";
 import React from "react";
 import './KeySelect.scss';
 import requests from '../../js/requests'
+import {stateToURL} from "../../js/url";
 
 // docs: https://react-select.com/creatable
 export default function KeySelect(props) {
@@ -28,6 +29,7 @@ export default function KeySelect(props) {
     control: (styles) => ({
       ...styles,
       backgroundColor: 'var(--background)',
+      transition: "none",
     }),
     input: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
@@ -84,6 +86,7 @@ export default function KeySelect(props) {
         state.active = newKey
         return { ...state }
       })
+      if (!newKey) return;
       props.handleKeyChange({ label: newKey.name })
     } else if (actionType.action === 'select-option') {
       if (newValue.value === props.keys.active.id) {
@@ -115,8 +118,48 @@ export default function KeySelect(props) {
     }
   }
 
+  /**
+   * Run effect the first render to check if the default selected key exists
+   */
+  React.useEffect(() => {
+    if (!props.keys.active.id) return;
+
+    getKey(props.keys.active.id)
+      .then(res => {
+        console.log(res)
+        if (res === null) {
+          const key = props.keys.active.id
+
+          // remove from local storage
+          onChange("", {action: "clear", removedValues: [{label: props.keys.active.name}]})
+
+          // alert: give this a timeout so that it appears after rerendering
+          setTimeout(() => {
+            alert("Key '"+key+"' not found on this server")
+          }, 50)
+
+        } else {
+          // else update name
+          props.setKeys(state => {
+            state.list[res.name] = res.id
+            state.active.id = res.id
+            state.active.name = res.name
+            if (state.list["Unnamed"] === res.id) {
+              delete state.list["Unnamed"]
+            }
+            return { ...state }
+          })
+          props.handleKeyChange({label: res.name, value: res.id})
+        }
+
+        // regardless of whether key exists or not - remove from URL
+        window.history.pushState({}, null, stateToURL([]));
+
+      })
+  }, [])
+
   return (
-    <div className={"KeySelect KeySelect-" + (props.position)}>
+    <div className={"KeySelect KeySelect-" + (props.position) + (props.demo ? " KeySelect-hidden" : "")}>
 
       <CreatableSelect key={`select_${props.keys.active.id}`}
                        defaultValue={({label: props.keys.active.name, value: props.keys.active.id})}

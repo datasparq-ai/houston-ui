@@ -261,6 +261,7 @@ export default class Graph extends React.Component {
           break
         } else {
           // fall through
+
         }
       default:
         this.renderFlowChart(duration);
@@ -690,6 +691,9 @@ export default class Graph extends React.Component {
     d.x = event.x;
     d.y = event.y;
     d3.select(element).attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+
+    this.tooltip
+      .attr("class", "Tooltip hide")
 
     this.link.attr('d', this.style.pathFunction);
   }

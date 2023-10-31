@@ -1,7 +1,16 @@
 
 import { useState } from "react";
+import requests from "./requests";
 
-export function useLocalStorageKeys(demo) {
+/**
+ *
+ * @param demo   bool:   Demo mode flag. If running in demo mode, create a key called 'demo'.
+ * @param urlKey string: Key provided in the URL as a query parameter. If provided this key will be selected.
+ *                       If it doesn't exist in local storage it will be created. If the key doesn't exist in the server
+ *                       an error message will be displayed.
+ * @returns {unknown[]}
+ */
+export function useLocalStorageKeys(demo, urlKey) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
@@ -20,7 +29,12 @@ export function useLocalStorageKeys(demo) {
         data.active.id = "demo"
         data.active.name = "Houston Demo"
         data.list["Houston Demo"] = "demo"
-        data.list["New Key"] = "foobar"
+      } else if (urlKey !== null && urlKey !== "") {
+        // assume key exists. If it doesn't, the KeySelect component will
+        // create an alert and remove it from localStorage.
+        data.active.id = urlKey
+        data.active.name = "Unnamed"
+        data.list["Unnamed"] = urlKey
       }
       return data
     } catch (error) {

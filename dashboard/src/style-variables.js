@@ -17,6 +17,10 @@ const styleVariables = {
   icon: "var(--icon)",
   link: "var(--link)",
   linkHighlight: "var(--linkHighlight)",
+
+  fontSizeM: "var(--font-size-m)",
+  fontSizeL: "var(--font-size-l)",
+  fontSizeXL: "var(--font-size-xl)",
 }
 
 styleVariables.graphWidthPercent = 0.6 * styleVariables.viewWidthPercent  // % of window.innerWidth

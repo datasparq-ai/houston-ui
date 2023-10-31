@@ -205,7 +205,7 @@ const dummyData = JSON.parse(`{
         "e": "0001-01-01T00:00:00Z"
       },
       {
-        "n": "tower-clearance-yaw-maneuver",
+        "n": "yaw-maneuver",
         "a": "",
         "u": [
           "liftoff"
@@ -233,7 +233,7 @@ const dummyData = JSON.parse(`{
       {"name": "release-holddown-arms", "upstream": ["engine-thrust-ok"]},
       {"name": "umbilical-disconnected"},
       {"name": "liftoff", "upstream": ["release-holddown-arms", "umbilical-disconnected"]},
-      {"name": "tower-clearance-yaw-maneuver", "upstream": ["liftoff"]}
+      {"name": "yaw-maneuver", "upstream": ["liftoff"]}
     ]
   },
 

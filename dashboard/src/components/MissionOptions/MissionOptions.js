@@ -3,13 +3,14 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Button from '@mui/material/Button';
+import Button from '../Button/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import './MissionOptions.scss'
+import CodeSnippet from "../CodeSnippet/CodeSnippet";
 
 const ITEM_HEIGHT = 48;
 
@@ -77,7 +78,6 @@ export default function MissionOptions(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '15ch',
           },
         }}
       >
@@ -104,6 +104,11 @@ export default function MissionOptions(props) {
 }
 
 function DeletePlanDialog(props) {
+  let key = "demo"
+  if (localStorage.keys) {
+    key = JSON.parse(localStorage.keys).active.id
+  }
+
   return (
     <>
     <DialogTitle id="alert-dialog-title">
@@ -116,13 +121,10 @@ function DeletePlanDialog(props) {
       <DialogContentText id="alert-dialog-description">
         Command line equivalent using the <a href={"https://pypi.org/project/houston-client/"} target="_blank" rel="noreferrer">Python client</a>:
       </DialogContentText>
-      <pre>
-        <code>
-          <span className={"program"}>export</span> HOUSTON_KEY=<span className={"spoiler"}>"{JSON.parse(localStorage.keys).active.id}"</span><br/>
-          <span className={"program"}>export</span> HOUSTON_BASE_URL=<span className={"string"}>"{document.location.protocol}//{document.location.host}/api/v1"</span><br/>
-          <span className={"program"}>python</span> -m houston delete --plan <span className={"string"}>"{props.plan.name}"</span>
-        </code>
-      </pre>
+      <CodeSnippet>
+        <span className={"program"}>export</span> HOUSTON_KEY="{document.location.protocol}//{document.location.host}/api/v1/key/<span className={"spoiler"}>{key}"</span><br/>
+        <span className={"program"}>python</span> -m houston delete --plan <span className={"string"}>"{props.plan.name}"</span>
+      </CodeSnippet>
     </DialogContent>
     <DialogActions>
       <Button onClick={props.handleDialogClose}>Cancel</Button>
@@ -133,6 +135,10 @@ function DeletePlanDialog(props) {
 }
 
 function DeleteMissionDialog(props) {
+  let key = "demo"
+  if (localStorage.keys) {
+    key = JSON.parse(localStorage.keys).active.id
+  }
   return (
     <>
     <DialogTitle id="alert-dialog-title">
@@ -145,13 +151,10 @@ function DeleteMissionDialog(props) {
       <DialogContentText id="alert-dialog-description">
         To keep a log of this mission, use the <a href={"https://pypi.org/project/houston-client/"} target="_blank" rel="noreferrer">Python client</a> and save the mission data as JSON:
       </DialogContentText>
-      <pre>
-        <code>
-          <span className={"program"}>export</span> HOUSTON_KEY=<span className={"spoiler"}>"{JSON.parse(localStorage.keys).active.id}"</span><br/>
-          <span className={"program"}>export</span> HOUSTON_BASE_URL=<span className={"string"}>"{document.location.protocol}//{document.location.host}/api/v1"</span><br/>
-          <span className={"program"}>python</span> -m houston delete --mission_id <span className={"string"}>"{props.selectedMission}"</span> &gt; <span className={"string"}>"{props.selectedMission}.json"</span>
-        </code>
-      </pre>
+      <CodeSnippet>
+        <span className={"program"}>export</span> HOUSTON_KEY="{document.location.protocol}//{document.location.host}/api/v1/key/<span className={"spoiler"}>{key}"</span><br/>
+        <span className={"program"}>python</span> -m houston delete --mission_id <span className={"string"}>"{props.selectedMission}"</span> &gt; <span className={"string"}>"{props.selectedMission}.json"</span>
+      </CodeSnippet>
     </DialogContent>
     <DialogActions>
       <Button onClick={props.handleDialogClose}>Cancel</Button>
@@ -162,7 +165,10 @@ function DeleteMissionDialog(props) {
 }
 
 function StartMissionDialog(props) {
-
+  let key = "demo"
+  if (localStorage.keys) {
+    key = JSON.parse(localStorage.keys).active.id
+  }
   return (
     <>
     <DialogTitle id="alert-dialog-title">
@@ -172,13 +178,10 @@ function StartMissionDialog(props) {
       <DialogContentText id="alert-dialog-description">
         This dashboard can't communicate with your Houston services. Use the <a href={"https://pypi.org/project/houston-client/"} target="_blank" rel="noreferrer">Python client</a> to start a new mission:
       </DialogContentText>
-      <pre>
-        <code>
-          <span className={"program"}>export</span> HOUSTON_KEY=<span className={"spoiler"}>"{JSON.parse(localStorage.keys).active.id}"</span><br/>
-          <span className={"program"}>export</span> HOUSTON_BASE_URL=<span className={"string"}>"{document.location.protocol}//{document.location.host}/api/v1"</span><br/>
-          <span className={"program"}>python</span> -m houston start --plan <span className={"string"}>"{props.plan.name}"</span>
-        </code>
-      </pre>
+      <CodeSnippet>
+        <span className={"program"}>export</span> HOUSTON_KEY="{document.location.protocol}//{document.location.host}/api/v1/key/<span className={"spoiler"}>{key}"</span><br/>
+        <span className={"program"}>python</span> -m houston start --plan <span className={"string"}>"{props.plan.name}"</span>
+      </CodeSnippet>
     </DialogContent>
     <DialogActions>
       <Button onClick={props.handleDialogClose}>Close</Button>

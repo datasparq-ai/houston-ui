@@ -31,6 +31,9 @@ export default function Mission(props) {
       .select("p.Tooltip-stageName")
         .text(props.data.i);
 
+    tooltip.select("p.Tooltip-service")
+      .text(props.data.a ? `${props.data.a}` : "");
+
     tooltip.select("p.Tooltip-numFailures")
       .text(props.data.numFailures ? `${props.data.numFailures} stage${props.data.numFailures === 1 ? "" : "s"} failed` : "");
 

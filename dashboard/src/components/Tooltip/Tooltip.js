@@ -11,18 +11,19 @@ import './Tooltip.scss';
  */
 export default function Tooltip(props) {
 
-  const handleMousemove = e => {
-    d3.select(props.reference.current)
-      .style("top", (e.clientY + 20) + "px")
-      .style("left", (e.clientX) + "px");
-  }
-
   useEffect(() => {
+    const handleMousemove = e => {
+      d3.select(props.reference.current)
+        .style("top", (e.clientY + 20) + "px")
+        .style("left", (e.clientX) + "px");
+    }
+
     document.addEventListener("mousemove", handleMousemove)
     return () => {
       document.removeEventListener("mousemove", handleMousemove)
     }
-  }, [handleMousemove])
+
+  }, [props.reference])
 
   return (
     <div className={"Tooltip hide"} ref={props.reference} >

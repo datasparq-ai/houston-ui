@@ -39,7 +39,8 @@ const getStateFromURL = () => {
   return {
     darkMode: (URLState.dark === "true" || darkMode) ?? darkMode,
     demo: URLState.demo === "true" ?? false,  // when true, app is in demo mode and does not need authentication to work
-    showHelp: URLState.help === "true" ?? false
+    showHelp: URLState.help === "true" ?? false,
+    key: URLState.key ?? null,
   }
 };
 
@@ -51,7 +52,7 @@ export default function App() {
   const [plans, setPlans] = useState({});
   const [darkMode, setDarkMode] = useState(urlState.darkMode);
   const [showHelp, setShowHelp] = useState(urlState.showHelp);
-  const [keys, setKeys] = useLocalStorageKeys(demo)
+  const [keys, setKeys] = useLocalStorageKeys(demo, urlState.key)
 
   /**
    * Initialise the websocket
