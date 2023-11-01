@@ -38,15 +38,21 @@ export function initWebSocket(key, demo) {
 
       }, 2000 + i * 200)
 
+      // setTimeout(() => {
+      //   // this tests that everything reloads correctly
+      //   conn.onmessage({data: JSON.stringify({"content": "", "event": "planCreation"})})
+      // }, 10000)
+
       return [stage, state]
     })
   }
 
   conn.onclose = function (ev) {
     console.log("! WebSocket connection closed");
-    setTimeout(() => {
-      initWebSocket()
-    }, 1000)
+    // TODO: how to recover from this?
+    // setTimeout(() => {
+    //   initWebSocket()
+    // }, 1000)
   };
 
   conn.onopen = function (ev) {

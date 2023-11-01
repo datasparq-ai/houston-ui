@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Switch } from '@material-ui/core'  // https://material-ui.com/components/switches/
+import React, {useState, useEffect} from "react";
 import HelpIcon from '@material-ui/icons/Help';
-import { withStyles } from '@material-ui/core/styles';
 
 import requests from '../../js/requests'
 import { URLToState, stateToURL } from '../../js/url'
@@ -13,19 +11,7 @@ import styles from '../../style-variables'
 import View from '../View/View'
 import Help from '../Help/Help'
 import KeySelect from '../KeySelect/KeySelect'
-
-const DarkModeSwitch = withStyles({
-  switchBase: {
-    '&$checked': {
-      color: "white",
-    },
-    '&$checked + $track': {
-      backgroundColor: styles.link,
-    },
-  },
-  checked: {},
-  track: {},
-})(Switch);
+import Switch from "../Switch/Switch";
 
 
 const getStateFromURL = () => {
@@ -80,6 +66,13 @@ export default function App() {
             return { ...state }
           })
         }
+        else if (data.event === "planCreation") {
+          // trigger a reload all plans
+          console.log("Websocket: got 'planCreation' event - reloading plans")
+          listPlans().then(getMissions).then(getPlans).then(() => {
+            console.log("finished reloading. plans:", plans)
+          })
+        }
       })
     };
   }, [keys.active.id, demo])
@@ -108,128 +101,137 @@ export default function App() {
     setShowHelp(!showHelp)
   };
 
-    /**
-     * API Get - Request all plans
-     */
-    const listPlans = async () => {
-      if (keys.active.id === null) {
-        return
-      }
+  /**
+   * API Get - Request all plans from the API. Updates the state and returns a list of plan names
+   */
+  const listPlans = React.useCallback(async () => {
+    if (keys.active.id === null) {
+      return [];
+    }
+    let planNames = [];
 
-      try {
+    try {
 
-        return requests.get('/plans', keys.active.id, (res, err) => {
+      await requests.get('/plans', keys.active.id, (res, err) => {
 
-          if (err || res.status !== 200) {
-            console.error(res, err);
-            return null;
-          }
+        if (err || res.status !== 200) {
+          console.error(res, err);
+          return null;
+        }
 
-          if (res.data === null) {
-            return
-          }
+        if (res.data === null) {
+          return
+        }
 
-          // do not overwrite existing data - manual merge
-          return setPlans(state => {
+        planNames = res.data
 
-            res.data.map(newPlan => {
-              if (state[newPlan]) {
-                // do nothing
-              } else {
-                state[newPlan] = {
-                  name: newPlan,
-                  missions: {},
-                }
+        // do not overwrite existing data - manual merge
+        return setPlans(state => {
+
+          res.data.map(newPlan => {
+            if (state[newPlan]) {
+              // do nothing
+            } else {
+              state[newPlan] = {
+                name: newPlan,
+                missions: {},
               }
-              return newPlan  // not used
-            });
-
-            return { ...state }
-
+            }
+            return newPlan  // not used
           });
 
-        }, demo)
-      }
-      catch (err) {
-        console.log(err)
-      }
+          return { ...state }
 
-    };
+        });
 
-    /**
-     * API Get - Gets all active missions grouped by plan and updates state.
-     */
-    const getMissions = async () => {
-      if (keys.active.id === null) {
-        return
-      }
+      }, demo)
 
-      return Promise.all(Object.keys(plans).map(plan => {
+      return planNames
+    }
+    catch (err) {
+      console.error(err)
+      return []
+    }
 
-        return requests.get(`/plans/${plan}/missions`, keys.active.id,(res, err) => {
+  }, [keys.active.id, setPlans, demo]);
 
-          if (err || res.status !== 200) {
-            console.error(res, err);
-            return null;
-          }
+  /**
+   * API Get - Gets all active missions grouped by plan and updates state.
+   */
+  const getMissions = React.useCallback(async (planNames) => {
+    if (keys.active.id === null) {
+      return
+    }
 
-          if (!res) return new Error();
+    return Promise.all(planNames.map(plan => {
 
-          if (!res.data) {
-            return
-          }
+      return requests.get(`/plans/${plan}/missions`, keys.active.id,(res, err) => {
 
-          const missions = {};
-          res.data.forEach(missionId => {
-            missions[missionId] = {loaded: false}
-          });
-          setPlans(state => {
-            return _updateMissions(state, plan, missions)
-          });
+        if (err || res.status !== 200) {
+          console.error(res, err);
+          return null;
+        }
 
-          return Promise.all(res.data.map(missionId => {
-            return requests.get(`/missions/${missionId}`, keys.active.id, (res2, err) => {
-              if (err || res.status !== 200) {
-                console.error(res2, err);
-                return null;
-              }
+        if (!res) return new Error();
+
+        if (!res.data) {
+          return
+        }
+
+        const missions = {};
+        res.data.forEach(missionId => {
+          missions[missionId] = {i: missionId, loaded: false}
+        });
+        setPlans(state => {
+          return _updateMissions(state, plan, missions)
+        });
+
+        return Promise.all(res.data.map(missionId => {
+          return requests.get(`/missions/${missionId}`, keys.active.id, (res2, err) => {
+            if (err || res.status !== 200) {
+              console.error(res2, err);
+              return setPlans(state => {
+                return _updateMissions(state, plan, {[missionId]: {i: missionId, loaded: false, loadingError: true}})
+              });
+            } else {
               return setPlans(state => {
                 res2.data.loaded = true;
                 return _updateMissions(state, plan, {[missionId]: res2.data})
               });
-            }, demo)
-          }));
+            }
+          }, demo)
+        }));
 
-        }, demo)
-      }));
+      }, demo)
+    }));
 
-    };
+  }, [keys.active.id, setPlans, demo]);
 
-    const getPlans = () => {
-      if (keys.active.id === null) {
-        return
-      }
-
-      return Promise.all(Object.keys(plans).map(plan => {
-
-        return requests.get(`/plans/${plan}`, keys.active.id, (res, err) => {
-
-          if (err || res.status !== 200) {
-            console.error(res, err);
-            return null;
-          }
-
-          if (!res) return new Error();
-
-          return setPlans(state => {
-            state[plan] = { ...res.data, ...state[plan] }
-            return { ...state }
-          })
-
-        }, demo)
-
-      }))
+  const getPlans = React.useCallback(() => {
+    if (keys.active.id === null) {
+      return
     }
+
+    return Promise.all(Object.keys(plans).map(plan => {
+
+      return requests.get(`/plans/${plan}`, keys.active.id, (res, err) => {
+
+        if (err || res.status !== 200) {
+          console.error(res, err);
+          return null;
+        }
+
+        if (!res) return new Error();
+
+        return setPlans(state => {
+          state[plan] = { ...res.data, ...state[plan] }
+          return { ...state }
+        })
+
+      }, demo)
+
+    }))
+  }, [keys.active.id, plans, setPlans, demo])
 
   /**
    * State Changer - Add a new or existing plan or mission to the state
@@ -249,10 +251,10 @@ export default function App() {
     Object.keys(missions).forEach(missionId => {
       // if mission is already in the state then the new mission must be loaded
       // do not load the new mission if `loaded = false`
-      if (state[planName].missions[missionId] && !missions[missionId].loaded) {
-        return
+      // do load the new mission if `loadingError != false`
+      if (missions[missionId].loadingError || !(state[planName].missions[missionId] && !missions[missionId].loaded)) {
+        state[planName].missions[missionId] = missions[missionId]
       }
-      state[planName].missions[missionId] = missions[missionId]
     })
 
     return { ...state }
@@ -334,10 +336,10 @@ export default function App() {
 
       <HelpIcon className={"GUIApp-helpButton"}
                 onClick={onClickHelpButton}
-                style={{color: styles.link}} />
+                style={{color: styles.faintGrey}} />
 
       <div className={"GUIApp-darkModeSwitch"} >
-        <DarkModeSwitch onChange={onDarkModeSwitch} />
+        <Switch onChange={onDarkModeSwitch} />
       </div>
 
     </div>

@@ -17,6 +17,7 @@ const styleVariables = {
   icon: "var(--icon)",
   link: "var(--link)",
   linkHighlight: "var(--linkHighlight)",
+  faintGrey: "var(--faintGrey)",
 
   fontSizeM: "var(--font-size-m)",
   fontSizeL: "var(--font-size-l)",

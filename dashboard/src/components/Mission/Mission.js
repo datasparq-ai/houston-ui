@@ -22,29 +22,35 @@ export default function Mission(props) {
   let tooltip = select(props.references.tooltip.current)
 
   /**
-   * Event Handler
+   * Event Handler - When user mouseovers a mission, update the tooltip.
    */
   const mouseenter = () => {
-
     tooltip
       .attr("class", "Tooltip show")
       .select("p.Tooltip-stageName")
         .text(props.data.i);
 
-    tooltip.select("p.Tooltip-service")
-      .text(props.data.a ? `${props.data.a}` : "");
+    if (props.data.loaded && !props.data.loadingError) {
 
-    tooltip.select("p.Tooltip-numFailures")
-      .text(props.data.numFailures ? `${props.data.numFailures} stage${props.data.numFailures === 1 ? "" : "s"} failed` : "");
+      tooltip.select("p.Tooltip-start")
+        .text("start: " + (props.data.t ? format(props.data.t) : "[loading]"));
 
-    tooltip.select("p.Tooltip-start")
-      .text("start: " + (props.data.t ? format(props.data.t) : "[loading]"));
+      tooltip.select("p.Tooltip-endTime")
+        .text(props.data.e ? "end: " + format(props.data.e) : "");
 
-    tooltip.select("p.Tooltip-endTime")
-      .text(props.data.e ? "end: " + format(props.data.e) : "");
+      tooltip.select("p.Tooltip-duration")
+        .text(duration(props.data.t, isComplete(props.data) ? props.data.e : null));
+    } else {
+      if (props.data.loadingError) {
+        tooltip.select("p.Tooltip-start").text("Failed to load!");
+      } else {
+        tooltip.select("p.Tooltip-start").text("Mission is loading");
+      }
+      tooltip.select("p.Tooltip-endTime").text("")
+      tooltip.select("p.Tooltip-duration").text("")
 
-    tooltip.select("p.Tooltip-duration")
-      .text(duration(props.data.t, isComplete(props.data) ? props.data.e : null));
+    }
+
 
   };
 
@@ -68,7 +74,7 @@ export default function Mission(props) {
     isComplete(props.data) ?
       "Mission-complete" :
       "Mission-incomplete" :
-    "Mission-loading";
+    (props.data.loadingError ? "Mission-loadingError" : "Mission-loading");
 
   const colourClass = props.selected ?
     missionClass + "-selected" :
@@ -81,7 +87,7 @@ export default function Mission(props) {
       <div className={`Mission-circle ${missionClass} ${colourClass}`}
            onClick={() => {
              props.handleSelectMission(props.data.n, props.data.i)
-           } }
+           }}
            onMouseEnter={mouseenter}
            onMouseLeave={mouseleave}/>
       {

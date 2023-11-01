@@ -1,7 +1,8 @@
 import axios from "axios";
 import dummyData from './../components/App/dummyData'
 
-const API_URL = "";
+// const API_URL = "";
+const API_URL = document.location.host === "localhost:3000" ? "http://localhost:5000" : "";
 const API_PREFIX = "/api/v1";
 
 // const log = console.log;

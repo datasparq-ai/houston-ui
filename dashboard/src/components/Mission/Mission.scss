@@ -58,6 +58,18 @@
   border-bottom-color: var(--failed);
 }
 
+.Mission-loadingError {
+  border: solid var(--link-width) transparent;
+  border-top-color: var(--failed);
+  border-bottom-color: var(--failed);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  //-webkit-animation: spinning 1s linear infinite;
+  //animation: spinning 1s linear infinite;
+}
+
 
 // animations
 

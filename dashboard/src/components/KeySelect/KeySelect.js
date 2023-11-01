@@ -29,6 +29,7 @@ export default function KeySelect(props) {
     control: (styles) => ({
       ...styles,
       backgroundColor: 'var(--background)',
+      borderColor: 'var(--faintGrey)',
       transition: "none",
     }),
     input: (styles, { data, isDisabled, isFocused, isSelected }) => {
@@ -138,7 +139,7 @@ export default function KeySelect(props) {
             alert("Key '"+key+"' not found on this server")
           }, 50)
 
-        } else {
+        } else if (res.name !== props.keys.active.name) {
           // else update name
           props.setKeys(state => {
             state.list[res.name] = res.id

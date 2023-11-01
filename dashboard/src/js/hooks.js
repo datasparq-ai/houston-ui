@@ -32,6 +32,7 @@ export function useLocalStorageKeys(demo, urlKey) {
       } else if (urlKey !== null && urlKey !== "") {
         // assume key exists. If it doesn't, the KeySelect component will
         // create an alert and remove it from localStorage.
+        console.log("Using key from URL")
         data.active.id = urlKey
         data.active.name = "Unnamed"
         data.list["Unnamed"] = urlKey
